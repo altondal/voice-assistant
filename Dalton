@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="tl,en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>VOICE COMMAND</title>
+  <style>
+    body {
+      background-image: url('d5.jpg');
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+      text-align: center;
+    }
+
+    #content h1 {
+      position: fixed;
+      z-index: 1;
+      text-align: center;
+      top: 13%;
+      left: 22%;
+    }
+
+    #content button {
+      box-shadow: 10px 5px 5px red;
+      background-image: url('1.jpg');
+      background-size: cover;
+      position: fixed;
+      z-index: 1;
+      text-align: center;
+      top: 32%;
+      left: 26.5%;
+    }
+
+    #content h2 {
+      position: fixed;
+      top: 23%;
+      left: 24%;
+      z-index: 1;
+      text-align: center;
+    }
+
+    button {
+      font-style: italic;
+      text-align: center;
+      font-family: cur;
+      padding: 10px 20px;
+      font-size: 24px;
+      border: solid;
+      border-radius: 40%;
+      cursor: pointer;
+      color: white;
+      position: relative;
+    }
+
+    h1 {
+      text-shadow: 2px 2px #9ACD32;
+      font-size: 25px;
+      font-style: normal;
+      font-weight: bold;
+      font-variant: small-caps;
+      font-family: serif;
+      text-align: center;
+      color: yellow;
+      top: 50%;
+    }
+
+    h2 {
+      text-shadow: 2px 2px #FFA500;
+      font-size: 20px;
+      font-style: normal;
+      font-weight: bold;
+      font-variant: small-caps;
+      font-family: serif;
+      text-align: center;
+      color: yellow;
+    }
+
+    #created-by {
+      position: absolute;
+      bottom: 10px;
+      left: 30%;
+      top: 50%;
+      transform: translateX(-50%);
+      font-size: 16px;
+      color: white;
+    }
+
+    p {
+      text-shadow: yellow 2px 0 2px;
+      position: fixed;
+      font-size: 20px;
+      font-style: normal;
+      font-weight: bold;
+      font-variant: small-caps;
+      font-family: serif;
+      text-align: center;
+      color: yellow;
+      top: 18%;
+      left: 28%;
+    }
+
+    #container {
+      background-image: url('ee.jpg');
+      border-radius: 10%;
+      position: fixed;
+      padding: 20px 50px 30px 0;
+      display: inline-block;
+      top: 10%;
+      left: 20%;
+      height: 40%;
+      width: 19%;
+      opacity: 0.8;
+    }
+  </style>
+  <script>
+    if ('SpeechRecognition' in window || 'webkitSpeechRecognition' in window) {
+      var recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
+      recognition.continuous = false;
+      recognition.lang = 'tl-PH,en-US';
+      recognition.onresult = function (event) {
+        var command = event.results[0][0].transcript.toLowerCase();
+        console.log('Recognized command:', command);
+        handleCommand(command);
+      };
+      function startRecognition() {
+        recognition.start();
+        console.log('Listening...');
+      }
+      function handleCommand(command) {
+        var response;
+        command = command.toLowerCase();
+        switch (command) {
+          case 'hello':
+            response = 'Hello! How can I help you?';
+            break;
+          case 'what is the weather today':
+            response = 'The weather today is sunny.';
+            break;
+          case 'open youtube':
+            openYouTube();
+            response = 'Opening YouTube in a new tab.';
+            break;
+          case 'play music':
+            playMusic();
+            response = 'Playing music on YouTube.';
+            break;
+          case 'open facebook':
+            openFacebook();
+            response = 'Opening Facebook in a new tab.';
+            break;
+          case 'open google':
+            openGoogle();
+            response = 'Opening Google in a new tab.';
+            break;
+          case 'open gmail':
+            opengmail();
+            response = 'Opening gmail in a new tab.';
+            break;
+          case 'search adobo recipe in google':
+            openAdoboRecipe();
+            response = 'searching adobo recipe.';
+            break;
+          case 'thank you':
+            response = 'You are welcome! If you have any more questions or need further assistance, feel free to ask.';
+            break;
+          case 'open w3 school':
+            openW3School();
+            response = 'Opening w3 school in a new tab.';
+            break;
+          case 'open ama system':
+            openDiscipulus();
+            response = 'Opening discipulus in a new tab.';
+            break;
+          case 'open cisco':
+            openCisco();
+            response = 'Opening cisco netacad in a new tab.';
+            break;
+          case 'define java':
+            response = 'Java is a versatile, platform-independent programming language known for its simplicity, reliability, and security, used to develop various applications such as desktop software, web applications, mobile apps, and enterprise systems.';
+            break;
+          case 'who invented html':
+            response = 'HTML, was invented by Tim Berners-Lee, a British computer scientist, in the late 1980s while he was working at CERN (European Organization for Nuclear Research).';
+            break;
+          case 'who created you':
+            response = 'I was created by Dalton Banaang a Computer Science student in AMA Computer College Baguio.';
+            break;
+          case 'what does html stand for?':
+            response = 'HTML stands for HyperText Markup Language.';
+            break;
+          case 'what is the purpose of html?':
+            response = 'The purpose of HTML is to structure and format content on web pages, making it understandable and visually appealing for users.';
+            break;
+          case 'what does css stands for?':
+            response = 'CSS stands for Cascading Style Sheets.';
+            break;
+
+          default:
+            searchAndDefine(command);
+            executeDefaultCommands();
+            break;
+        }
+        speak(response);
+      }
+      function speak(message) {
+        var synth = window.speechSynthesis;
+        var utterance = new SpeechSynthesisUtterance(message);
+        synth.speak(utterance);
+      }
+      function openYouTube() {
+        var youtubeUrl = 'https://www.youtube.com/';
+        var newTab = window.open(youtubeUrl, '_blank');
+        newTab.focus();
+      }
+      function playMusic() {
+        var musicUrl = 'https://www.youtube.com/watch?v=XKk574a-QO8';
+        var newTab = window.open(musicUrl, '_blank');
+        newTab.focus();
+      }
+      function openFacebook() {
+        var facebookUrl = 'https://www.facebook.com';
+        var newTab = window.open(facebookUrl, '_blank');
+        newTab.focus();
+      }
+      function openGoogle() {
+        var googleUrl = 'https://www.google.com';
+        var newTab = window.open(googleUrl, '_blank');
+        newTab.focus();
+      }
+      function opengmail() {
+        var gmailUrl = 'https://mail.google.com/';
+        var newTab = window.open(gmailUrl, '_blank');
+        newTab.focus();
+      }
+      function openAdoboRecipe() {
+        var adoborecipeUrl = 'https://www.allrecipes.com/recipe/128699/famous-chicken-adobo/';
+        var newTab = window.open(adoborecipeUrl, '_blank');
+        newTab.focus();
+      }
+      function openW3School() {
+        var w3schoolUrl = 'https://www.w3schools.com/tags/att_open.asp';
+        var newTab = window.open(w3schoolUrl, '_blank');
+        newTab.focus();
+      }
+      function openDiscipulus() {
+        var discipulusUrl = 'https://discipulusv2.amasystem.net/';
+        var newTab = window.open(discipulusUrl, '_blank');
+        newTab.focus();
+      }
+      function openCisco() {
+        var ciscoUrl = 'https://www.netacad.com/portal/learning';
+        var newTab = window.open(ciscoUrl, '_blank');
+        newTab.focus();
+      }
+      function speakInitialGreeting() {
+        var initialGreeting = "Hi there, welcome to Banz. How can i assist you today.";
+        speak(initialGreeting);
+      }
+      window.onload = function () {
+        speakInitialGreeting();
+      };
+      function resetOutput() {
+        document.getElementById("output").innerText = "";
+        speakInitialGreeting();
+      }
+      function searchAndDefine(word) {
+        var googleUrl = 'https://www.google.com/search?q=' + encodeURIComponent(word);
+        var newTab = window.open(googleUrl, '_blank');
+        newTab.onload = function () {
+          var title = newTab.document.title.split("-")[0].trim();
+          speak("Search results for " + word + ": " + title);
+        }
+      }
+      function searchAndDefine(word) {
+        var googleUrl = 'https://www.google.com/search?q=+' + encodeURIComponent(word);
+        var newTab = window.open(googleUrl, '_blank');
+        newTab.onload = function () {
+          var definition = newTab.document.querySelector('div[data-attrid="dictionary_owq_dictionary-answer"]').innerText;
+          speak("The definition of " + word + " is: " + definition);
+        }
+      }
+
+    } else {
+      alert('Speech recognition not supported in this browser.');
+    }
+  </script>
+</head>
+
+<body>
+  <div id="content">
+    <div id="container">
+      <h1>ŴĔĽÇǑMÊ ŢÕ BÄÑŹ</h1>
+      <p>ŶŐŬŘ</p>
+      <h2>VὈĭĈĔ ǍŠŠǏŚŢǍÑŦ</h2>
+      <button onclick="startRecognition()">Śpěąķ</button>
+    </div>
+  </div>
+  <div id="output">
+  </div>
+  <div id="created-by">
+    Created by: Đᾂɭτοὴβαήᾄᾄήɠ
+  </div>
+</body>
+
+</html>
